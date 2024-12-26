@@ -5,6 +5,7 @@
 #include <initializer_list>
 using namespace std;
 
+const int numberus = 36;
 
 enum class suits { chervi, kresty, bubny, piki };
 struct card {
@@ -14,7 +15,7 @@ struct card {
     bool in_game = false;
 };
 void tbspace(card* tb, card* pl, int num) {
-    for (int i = 0; i != 36; ++i) {
+    for (int i = 0; i != numberus; ++i) {
         if (not tb[i].in_game)
         {
             tb[i] = pl[num];
@@ -58,8 +59,8 @@ void print(card* a) {
     cout << endl;
 };
 void mix(card* a) {
-    for (int i = 0; i != 36; i++) {
-        int z = rand() % 36;
+    for (int i = 0; i != numberus; i++) {
+        int z = rand() % numberus;
         card b = a[i];
         a[i] = a[z];
         a[z] = b;
@@ -76,7 +77,7 @@ void take(card* giving, card* taking) {
 
 void slurp(card* giving, card* taking) {
     int b = 0;
-    for (int i = 0; i != 36; i++)
+    for (int i = 0; i != numberus; i++)
         if (giving[i].in_game) {
             while (taking[b].in_game) b++;
             taking[b] = giving[i];
@@ -85,8 +86,8 @@ void slurp(card* giving, card* taking) {
 };
 void take_while_six(card* taker, card* giver) {
     int g = 0, t = 0;
-    for (int i = 0; i != 36; i++) if (giver[i].in_game) g++;
-    for (int i = 0; i != 36; i++) if (taker[i].in_game) t++;
+    for (int i = 0; i != numberus; i++) if (giver[i].in_game) g++;
+    for (int i = 0; i != numberus; i++) if (taker[i].in_game) t++;
     while (g != 0 && t < 6) {
         take(giver, taker);
         g--; t++;
@@ -103,13 +104,13 @@ bool defense_is_correct(card attack, card protection) {
     };
 };
 bool who_is_winner(card* p2) {
-    for (int i = 0; i != 36; i++) if (p2[i].in_game) return false;
+    for (int i = 0; i != numberus; i++) if (p2[i].in_game) return false;
     cout << "Выйграл 2й игрок!";
     return true;
 };
 bool game_is_over(card* t, card* p1, card* p2) {
-    for (int i = 0; i != 36; i++) if (t[i].in_game) return false;
-    for (int i = 0; i != 36; i++) if (p1[i].in_game) who_is_winner(p2);
+    for (int i = 0; i != numberus; i++) if (t[i].in_game) return false;
+    for (int i = 0; i != numberus; i++) if (p1[i].in_game) who_is_winner(p2);
     cout << "Выйграл 1й игрок!";
     return true;
 };
@@ -127,7 +128,7 @@ bool toss_is_correct(card* table, card carda) {
 }
 
 int correctnumb(int numb, card* pl) {
-    for (int k = 0; k < 36; k++)
+    for (int k = 0; k < numberus; k++)
         for (int i = k; i < 36 - 1; i++) if (not pl[i].in_game) {
             pl[i] = pl[i + 1];
             pl[i + 1].in_game = false;
@@ -235,17 +236,17 @@ void stp(card* pla, card* pld, card* dec, card* table, suits trump, int* step) {
     take_while_six(pla, dec);
     take_while_six(pld, dec);
     system("cls");
-    for (int i = 0; i != 36; i++)  table[i].in_game = false;
+    for (int i = 0; i != numberus; i++)  table[i].in_game = false;
 }
 
 void game() {
     setlocale(LC_ALL, "Ru");
     srand(time(0));
 
-    card table[36];
-    card player1[36];
-    card player2[36];
-    card deck[36];
+    card table[numberus];
+    card player1[numberus];
+    card player2[numberus];
+    card deck[numberus];
 
     suits trump = suits(rand()%4);
 
@@ -255,21 +256,22 @@ void game() {
     int* c = &step;
 
     for (int i = 0; i < 4; i++)
-        for (int j = 0; j < 9; j++) {
+        for (int j = 0; j < numberus/4; j++) {
             switch (i) {
-            case 0: deck[i * 9 + j].suit = { suits::chervi }; break;
-            case 1: deck[i * 9 + j].suit = { suits::kresty }; break;
-            case 2: deck[i * 9 + j].suit = { suits::bubny }; break;
-            case 3: deck[i * 9 + j].suit = { suits::piki }; break;
+            case 0: deck[i * numberus/4 + j].suit = { suits::chervi }; break;
+            case 1: deck[i * numberus/4 + j].suit = { suits::kresty }; break;
+            case 2: deck[i * numberus/4 + j].suit = { suits::bubny }; break;
+            case 3: deck[i * numberus/4 + j].suit = { suits::piki }; break;
             };
             switch (trump) {
-            case suits::chervi: deck[0 * 9 + j].is_trump = true; break;
-            case suits::kresty: deck[1 * 9 + j].is_trump = true; break;
-            case suits::bubny: deck[2 * 9 + j].is_trump = true; break;
-            case suits::piki: deck[3 * 9 + j].is_trump = true; break;
+            case suits::chervi: deck[0 * numberus/4 + j].is_trump = true; break;
+            case suits::kresty: deck[1 * numberus/4 + j].is_trump = true; break;
+            case suits::bubny: deck[2 * numberus/4 + j].is_trump = true; break;
+            case suits::piki: deck[3 * numberus/4 + j].is_trump = true; break;
             };
-            deck[i * 9 + j].numb = j + 6;
-            deck[i * 9 + j].in_game = true;
+            if (j > 8) j = 0;
+            deck[i * numberus/4 + j].numb = j + 6;
+            deck[i * numberus/4 + j].in_game = true;
         };
 
     mix(deck);
