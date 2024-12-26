@@ -116,7 +116,7 @@ bool game_is_over(card* t, card* p1, card* p2) {
 };
 
 bool toss_is_correct(card* table, card carda) {
-    for (int i = 0; i != 36; ++i) {
+    for (int i = 0; i != numberus; ++i) {
         if (carda.numb == table[i].numb)
             return true;
         else return false;
@@ -129,7 +129,7 @@ bool toss_is_correct(card* table, card carda) {
 
 int correctnumb(int numb, card* pl) {
     for (int k = 0; k < numberus; k++)
-        for (int i = k; i < 36 - 1; i++) if (not pl[i].in_game) {
+        for (int i = k; i < numberus - 1; i++) if (not pl[i].in_game) {
             pl[i] = pl[i + 1];
             pl[i + 1].in_game = false;
         };
