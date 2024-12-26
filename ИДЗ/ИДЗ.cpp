@@ -269,7 +269,7 @@ void game() {
             case suits::bubny: deck[2 * numberus/4 + j].is_trump = true; break;
             case suits::piki: deck[3 * numberus/4 + j].is_trump = true; break;
             };
-            if (j > 8) j = 0;
+            if (j > 9) j = 0;
             deck[i * numberus/4 + j].numb = j + 6;
             deck[i * numberus/4 + j].in_game = true;
         };
