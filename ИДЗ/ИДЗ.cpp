@@ -37,7 +37,7 @@ void ann(suits trump) {
 
 void print(card* a) {
     int num = 1;
-    for (int i = 0; i != 36; i++) {
+    for (int i = 0; i != numberus; i++) {
         /*if (not a[i].in_game && a[i].numb != 0) cout << "0" << endl;*/
         if (a[i].in_game) {
             cout << num++ << ".";
