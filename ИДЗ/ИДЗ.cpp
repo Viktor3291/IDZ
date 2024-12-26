@@ -1,7 +1,8 @@
-﻿#include <iostream>
+#include <iostream>
 #include <string>
 #include<array>
 #include<limits>
+#include <initializer_list>
 using namespace std;
 
 
@@ -24,12 +25,12 @@ void tbspace(card* tb, card* pl, int num) {
     }
 }
 
-void ann(int trump) {
+void ann(suits trump) {
     switch (trump) {
-    case 0: cout << "козырь это черви" << endl; break;
-    case 1: cout << "козырь это крести" << endl; break;
-    case 2: cout << "козырь это бубны" << endl; break;
-    case 3: cout << "козырь это пики" << endl; break;
+    case suits::chervi: cout << "козырь это черви" << endl; break;
+    case suits::kresty: cout << "козырь это крести" << endl; break;
+    case suits::bubny: cout << "козырь это бубны" << endl; break;
+    case suits::piki: cout << "козырь это пики" << endl; break;
     }
 }
 
@@ -154,7 +155,7 @@ int correct() {
     }
     return numb;
 }
-void stp(card* pla, card* pld, card* dec, card* table, int trump, int* step) {
+void stp(card* pla, card* pld, card* dec, card* table, suits trump, int* step) {
     int numb1;
     int numb2;
     string vvod;
@@ -246,7 +247,7 @@ void game() {
     card player2[36];
     card deck[36];
 
-    int trump = rand() % 4;
+    suits trump = suits(rand()%4);
 
     int numb1;
     int numb2;
@@ -262,10 +263,10 @@ void game() {
             case 3: deck[i * 9 + j].suit = { suits::piki }; break;
             };
             switch (trump) {
-            case 0: deck[0 * 9 + j].is_trump = true; break;
-            case 1: deck[1 * 9 + j].is_trump = true; break;
-            case 2: deck[2 * 9 + j].is_trump = true; break;
-            case 3: deck[3 * 9 + j].is_trump = true; break;
+            case suits::chervi: deck[0 * 9 + j].is_trump = true; break;
+            case suits::kresty: deck[1 * 9 + j].is_trump = true; break;
+            case suits::bubny: deck[2 * 9 + j].is_trump = true; break;
+            case suits::piki: deck[3 * 9 + j].is_trump = true; break;
             };
             deck[i * 9 + j].numb = j + 6;
             deck[i * 9 + j].in_game = true;
